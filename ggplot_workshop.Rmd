@@ -1,0 +1,256 @@
+
+```{r}
+data(faithful)
+```
+
+```{r}
+ggplot(faithful, aes(x=eruptions, y=waiting))+
+  geom_point()
+```
+
+```{r}
+ggplot(faithful)+
+  geom_point(aes(x=eruptions, y=waiting),
+                     colour="steelblue")
+```
+
+
+```{r}
+ggplot(faithful, aes(x=eruptions, y=waiting,
+                     colour=eruptions < 3))+
+  geom_point()
+```
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions))
+```
+
+```{r}
+ggplot(faithful)+
+  geom_point(aes(x=eruptions, y=waiting),
+                     shape = 'square', alpha=0.5)
+```
+
+```{r}
+ggplot(faithful)+
+  geom_point(aes(x=eruptions, y=waiting),
+                     shape = 'square', alpha=0.5)+
+  geom_abline(slope = -40, intercept = 200)
+```
+
+
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions, colour = eruptions < 3.1))
+```
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions, fill = eruptions < 3.1))
+```
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions, fill = waiting < 60))
+```
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions, fill = waiting < 60), position='identity', alpha=0.6)
+```
+
+```{r}
+ggplot(faithful) + geom_histogram(aes(x=eruptions, fill = waiting < 60), position='dodge', alpha=0.6)
+```
+
+```{r}
+data(mpg)
+```
+
+```{r}
+head(mpg)
+```
+
+```{r}
+ggplot(mpg)+ geom_bar(aes(x=class))
+```
+
+```{r}
+ggplot(mpg)+
+  geom_bar(
+    aes(x=class, y=after_stat(100 * count / sum(count)))
+  )
+```
+
+the default geometry for stat is bar
+```{r}
+ggplot(mpg) + 
+  stat_count(aes(x=class))
+```
+
+
+```{r}
+ggplot(mpg) + 
+  stat_count(aes(x=class), geom='point')
+```
+
+
+```{r}
+ggplot(mpg) + geom_density(aes(x=hwy))
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_jitter(aes(x=class, y=hwy), width=0.2)
+```
+
+Points grouped by the different classes
+```{r}
+ggplot(mpg) + 
+  geom_jitter(aes(x=class, y=hwy), width=0.2)+
+  stat_summary(aes(x=class, y=hwy), fun=mean, geom='point', colour='red', size=3)
+```
+
+```{r}
+ggplot(mpg)+
+  geom_point(aes(x=displ, y= hwy, colour=class))
+```
+
+```{r}
+ggplot(mpg)+
+  geom_point(aes(x=displ, y= hwy, colour=class))+
+  scale_colour_brewer(type='qual')
+```
+
+```{r}
+ggplot(mpg)+
+  geom_point(aes(x=displ, y=hwy))+
+  scale_x_continuous(breaks = c(3, 6, 9))+
+  scale_y_continuous(trans = 'log10')
+```
+
+```{r}
+ggplot(mpg)+
+  geom_point(aes(x=displ, y=hwy, colour=class, size=cyl))+
+  scale_colour_brewer(type='qual')+
+  scale_size_area(breaks=c(4, 5, 6, 8), max_size=10)
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy, colour=class, size=cty))
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy, colour=cty, size=cty))+
+  guides(colour='legend')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy, colour=cty, size=cty))
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy))+
+  facet_wrap(~ class)
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy))+
+  facet_wrap(~drv, scales='free')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy))+
+  facet_wrap(~drv, scales='free_x')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy))+
+  facet_wrap(~drv, scales='free_y')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_bar(aes(y=manufacturer))+
+  facet_grid(class ~ ., space='free_y', scales='free_y')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy)) + 
+  facet_grid(year ~ drv)
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_point(aes(x=displ, y=hwy)) + 
+  facet_wrap(~year+drv)
+```
+
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(x=class))+
+  coord_polar()
+```
+
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(x=class))+
+  coord_polar(theta='y')+
+  expand_limits(y=70)
+```
+
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(x=class))+
+  scale_y_continuous(limits=c(0, 40))
+```
+
+removes three rows that are outside of the scale. To add those scales:
+
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(x=class))+
+  coord_cartesian(ylim=c(0, 40))
+```
+
+```{r}
+ggplot(mpg)+
+  geom_point(aes(x=hwy, y=displ))+
+  coord_trans(y='log')
+```
+
+```{r}
+ggplot(mpg) + 
+  geom_bar(aes(y=class))+
+  facet_wrap(~year)+
+  theme_minimal()
+```
+
+```{r}
+ggplot(mpg)+
+  geom_bar(aes(y=class))+
+  facet_wrap(~year) +
+  labs(title="Number of car models per class",
+       caption="source: http://fueleconomy.gov",
+       x=NULL,
+       y=NULL)+
+  scale_x_continuous(expand = c(0, NA))+
+  theme_minimal()+
+  theme(
+    text = element_text('Avenir Next Condensed'),
+    strip.text = element_text(face='bold',
+                              hjust=0),
+    plot.caption = element_text(face='italic'),
+    panel.grid.major=element_line('white',
+                                  size=0.5),
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.ontop=TRUE
+  )
+```
+
