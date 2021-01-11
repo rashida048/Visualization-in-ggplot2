@@ -1,0 +1,434 @@
+
+
+```{r}
+library(ggplot2)
+```
+
+```{r}
+data()
+data(iris)
+```
+
+
+```{r}
+head(iris)
+```
+
+```{r}
+summary(iris)
+```
+
+```{r}
+plot(iris)
+```
+
+```{r}
+plot(iris$Petal.Length, iris$Sepal.Width)
+```
+
+```{r}
+ggplot(iris, aes(x=Petal.Length, y = Sepal.Width))+
+  geom_point()
+```
+
+```{r}
+ggplot(iris, aes(x=Petal.Length, y = Sepal.Width, col=Species))+
+  geom_point()
+```
+
+```{r}
+ggplot(iris, aes(x=Petal.Length, y = Sepal.Width, col=Species, size=Petal.Width))+
+  geom_point()
+```
+
+```{r}
+ggplot(iris, aes(x=Petal.Length, y = Sepal.Width, col=Species, size=Petal.Width, shape=Species))+
+  geom_point()
+```
+
+```{r}
+ggplot(iris, aes(x=Petal.Length, y = Sepal.Width, col=Species, size=Petal.Width, shape=Species, alpha = Sepal.Length))+
+  geom_point()
+```
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length))+geom_bar(stat="summary", fun.y="mean")
+```
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length, fill=Species))+geom_bar(stat="summary", fun.y="mean")
+```
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length))+geom_bar(stat="summary", fun.y="mean", fill="blue")
+```
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length))+geom_bar(stat="summary", fun.y="mean", fill="#ff0080", col="black")+geom_point()
+```
+
+```{r}
+myPlot = ggplot(iris, aes(Species, Sepal.Length)) +
+  geom_bar(stat = "summary", fill = "#ff0080", col = "black") +
+  geom_point(position = position_jitter(0.2), size = 3, shape = 21)
+```
+
+
+```{r}
+myPlot+theme(panel.grid = element_blank(),
+             panel.background = element_rect(fill="white"),
+             panel.border = element_rect(colour = "black", fill=NA, size=0.2))
+```
+
+```{r}
+myPlot
+```
+
+```{r}
+myPlot+theme_bw()
+```
+
+```{r}
+myPlot+theme_classic()
+```
+
+```{r}
+myPlot+theme_dark()
+```
+
+```{r}
+myPlot+theme_gray()
+```
+
+```{r}
+myPlot+theme_light()
+```
+
+```{r}
+myPlot+theme_linedraw()+theme(panel.background = element_rect(fill="blue"))
+```
+
+```{r}
+myPlot+theme_minimal()
+```
+
+```{r}
+myPlot+theme_void()
+```
+
+```{r}
+ggplot(iris, aes(Species, Sepal.Length))+geom_point()+
+  geom_boxplot(fill="#ff0080", col="black", notch = TRUE)
+```
+
+```{r}
+data(ToothGrowth)
+head(ToothGrowth)
+```
+
+```{r}
+summary(ToothGrowth)
+```
+
+```{r}
+ggplot(ToothGrowth, aes(supp, len, fill=as.factor(dose))) + 
+  geom_bar(stat="summary", fun = "median", col="black",
+           position="dodge")+
+  geom_point(position=position_dodge(0.9))
+```
+
+```{r}
+ggplot(ToothGrowth, aes(supp, len, fill=as.factor(dose))) + 
+  geom_bar(stat="summary", fun = "median", col="black")+
+  geom_point(position=position_dodge(0.9))
+```
+
+```{r}
+ggplot(ToothGrowth, aes(supp, len, fill=as.factor(dose))) + 
+  geom_bar(stat="summary", fun = "median", col="black",
+           position="dodge")+
+  geom_point(position=position_dodge(0.9))
+```
+
+
+```{r}
+ggplot(ToothGrowth, aes(as.factor(dose), len, group=supp, col=supp))+ geom_line(stat="summary", fun="mean")+geom_smooth(method="lm")
+```
+
+```{r}
+ggplot(ToothGrowth, aes(as.factor(dose), len, group=supp))+ geom_line()
+```
+
+```{r}
+head(ToothGrowth)
+```
+
+```{r}
+ggplot(ToothGrowth, aes(as.factor(dose), len, group=supp, col=supp))+ geom_line(stat='summary', fun='mean')
+```
+
+```{r}
+gap = read.csv("https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv")
+head(gap)
+```
+
+```{r}
+ggplot(data=gap, mapping=aes(x=year, y=pop))+geom_point()
+```
+
+```{r}
+ggplot(data=gap, mapping=aes(x=year, y=pop,
+                             colour = continent))+
+  geom_point()+
+  scale_colour_brewer(palette="Set1")
+```
+
+```{r}
+library(RColorBrewer)
+```
+
+```{r}
+display.brewer.all()
+```
+
+```{r}
+display.brewer.all(colorblindFriendly = TRUE)
+```
+
+```{r}
+p = ggplot(data=gap, mapping=aes(x=year, y=pop,
+                             colour = continent))+
+  geom_point()
+```
+
+
+```{r}
+p + scale_colour_manual(values = c("blue", "red", "purple",
+                                   "green", "orange"))
+```
+
+```{r}
+p + scale_colour_manual(values = c("#44BDB5", "#DFE661",
+                                   "#E69AE2", "#F23F4B",
+                                   "#D17B5E"))
+```
+
+```{r}
+p + scale_y_log10()
+```
+
+```{r}
+unique_years = unique(gap$year)
+```
+
+
+```{r}
+unique_years
+```
+
+```{r}
+p + scale_x_continuous(breaks = unique_years)
+```
+
+```{r}
+p + scale_x_continuous(breaks = unique_years) +
+  scale_y_continuous(breaks = c(0, 100000000, 200000000, 500000000, 1000000000))
+```
+
+```{r}
+p + scale_x_continuous(breaks = unique_years) +
+  scale_y_continuous(breaks = c(0, 100000000, 200000000, 500000000, 1000000000),
+                     labels=c(0, "100 m", "200 m", 
+                              "500 m", "1 b"))
+```
+
+```{r}
+p + ylim(c(0, 3600000000))
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp)) + 
+  geom_histogram()
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp)) + 
+  geom_histogram(binwidth = 10)
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp)) + 
+  geom_histogram(bins = 40)
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 10)
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 10, position='fill')
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 10, position='dodge')
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent)
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme(legend.position = 'none')
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme(legend.position = 'top')
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme(legend.position = 'top' )+
+  theme_minimal()
+```
+
+```{r}
+install.packages('ggthemes')
+```
+
+```{r}
+library(ggthemes)
+```
+
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme(legend.position = 'top')+
+  theme_calc()
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme(legend.position = 'top')+
+  theme_excel()
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme_excel()+
+  theme(legend.position = 'top')
+```
+
+```{r}
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_histogram(bins = 40)+
+  facet_wrap(~continent) + 
+  theme_minimal()+
+  theme(legend.position = 'top') + 
+  xlab("Life Extectancy") + 
+  ylab("Count")
+```
+
+```{r}
+ggplot(gap, aes(x= gdpPercap, 
+                y = lifeExp))+
+  geom_point()+
+  labs(x = "GDP per capita",
+       y="Life Expectancy",
+       title = "How does GDP relate to life expectancy?")+
+  theme_bw()
+```
+
+```{r}
+ggplot(gap, aes(x= gdpPercap, 
+                y = lifeExp))+
+  geom_point(aes(colour = continent))+
+  labs(x = "GDP per capita",
+       y="Life Expectancy",
+       title = "How does GDP relate to life expectancy?")+
+  theme_bw()
+```
+
+```{r}
+ggplot(gap, aes(x= gdpPercap, 
+                y = lifeExp))+
+  geom_point(aes(colour = continent))+
+  geom_smooth()+
+  labs(x = "GDP per capita",
+       y="Life Expectancy",
+       title = "How does GDP relate to life expectancy?")+
+  theme_bw()
+```
+
+```{r}
+ggplot(gap, aes(x= gdpPercap, 
+                y = lifeExp))+
+  geom_point(aes(colour = continent))+
+  geom_smooth()+
+  scale_x_log10()+
+  labs(x = "GDP per capita",
+       y="Life Expectancy",
+       title = "How does GDP relate to life expectancy?")+
+  theme_bw()
+```
+
+```{r}
+ggplot(gap, aes(x= gdpPercap, 
+                y = lifeExp))+
+  geom_point(aes(colour = continent), alpha = 0.5)+
+  geom_smooth(method = "lm")+
+  scale_x_log10()+
+  labs(x = "GDP per capita",
+       y="Life Expectancy",
+       title = "How does GDP relate to life expectancy?")+
+  theme_bw()
+```
+
+```{r}
+ggsave("GDPLifeExp.png")
+```
+
+```{r}
+ggsave("GDP.png", width = 20, height = 15, units="cm")
+```
+
+
+```{r}
+ggplot(gap, aes(x=continent))+
+  geom_bar()
+```
+
+```{r}
+ggplot(gap, aes(x=continent, y = lifeExp))+
+  geom_boxplot()
+```
+
+```{r}
+ggplot(gap, aes(x=continent, y = lifeExp))+
+  geom_violin()
+```
+
+```{r}
+ggplot(gap, aes(x=continent, y = lifeExp))+
+  geom_violin()+
+  theme(axis.text.x = element_text(angle = 90))
+```
+install.packages("esquisse")to install a package that support drag and drop visualization like tableau
